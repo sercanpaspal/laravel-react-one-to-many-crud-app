@@ -21,7 +21,7 @@ class PersonResource extends JsonResource
             'birthday' => $this->birthday,
             'gender' => $this->gender,
             'genderText' => $this->gender ? 'Erkek' : 'Kadın',
-            'addresses_count' => $this->when($this->addresses_count, $this->addresses_count),
+            'addresses_count' => $this->when(isset($this->addresses_count), $this->addresses_count),
             'addresses' => AddressResource::collection($this->whenLoaded('addresses')),
         ];
     }
