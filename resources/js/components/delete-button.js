@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import {
     useDisclosure,
+    useToast,
     Button,
     AlertDialog,
     AlertDialogHeader,
@@ -13,6 +14,7 @@ import {
 
 const DeleteButton = ({ children, title, message, action, onDeleted }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const toast = useToast();
     const cancelRef = useRef();
     const [loading, setLoading] = useState(false);
 
@@ -21,6 +23,7 @@ const DeleteButton = ({ children, title, message, action, onDeleted }) => {
         action().then(() => {
             setLoading(false);
             onClose();
+            toast({ title: "Silindi!", status: "info" });
             onDeleted();
         });
     };
@@ -40,9 +43,7 @@ const DeleteButton = ({ children, title, message, action, onDeleted }) => {
                 <AlertDialogContent>
                     <AlertDialogHeader>{title}</AlertDialogHeader>
                     <AlertDialogCloseButton />
-                    <AlertDialogBody>
-                        {message}
-                    </AlertDialogBody>
+                    <AlertDialogBody>{message}</AlertDialogBody>
                     <AlertDialogFooter>
                         <Button size="sm" ref={cancelRef} onClick={onClose}>
                             Hayır

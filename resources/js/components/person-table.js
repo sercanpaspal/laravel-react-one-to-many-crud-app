@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import agent from "../agent";
 import PersonTableRow from "./person-table-row";
+import LoadingSkeleton from "./loading-skeleton";
 
 const PersonTable = () => {
     const [loading, setLoading] = useState(false);
@@ -27,7 +28,9 @@ const PersonTable = () => {
             .finally(() => setLoading(false));
     }, [page]);
 
-    return (
+    return loading && page === 1 ? (
+        <LoadingSkeleton />
+    ) : (
         <Table size="sm" variant="striped" colorScheme="gray">
             {meta && page < meta.last_page && (
                 <TableCaption>
