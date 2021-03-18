@@ -22,7 +22,7 @@ class PersonController extends Controller
 
     public function store(PersonSaveRequest $request)
     {
-        return Person::create($request->validated());
+        return PersonResource::make(Person::create($request->validated()));
     }
 
     public function update(PersonSaveRequest $request, $id)
