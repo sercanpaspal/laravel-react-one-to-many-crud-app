@@ -3,13 +3,13 @@
 namespace Tests\Feature;
 
 use App\Models\Person;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PersonTest extends TestCase
 {
-    use WithFaker;
+    use WithFaker, DatabaseMigrations;
     
     public function test_store()
     {
@@ -33,7 +33,7 @@ class PersonTest extends TestCase
 
     public function test_edit()
     {
-        $person = Person::firstOrFail();
+        $person = Person::factory()->create();
 
         $response = $this->getJson('/api/person/' . $person->id . '/edit');
 
@@ -44,7 +44,7 @@ class PersonTest extends TestCase
 
     public function test_update()
     {
-        $person = Person::firstOrFail();
+        $person = Person::factory()->create();
 
         $response = $this->putJson('/api/person/' . $person->id, [
             'name' => $this->faker->name,
@@ -57,7 +57,7 @@ class PersonTest extends TestCase
 
     public function test_delete()
     {
-        $person = Person::firstOrFail();
+        $person = Person::factory()->create();
 
         $response = $this->deleteJson('/api/person/' . $person->id);
 
