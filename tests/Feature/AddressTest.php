@@ -4,18 +4,18 @@ namespace Tests\Feature;
 
 use App\Models\Address;
 use App\Models\Person;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AddressTest extends TestCase
 {
-    use WithFaker;
-    
+    use WithFaker, DatabaseMigrations;
+
     public function test_store()
     {
         $person = Person::factory()->create();
-
+        
         $response = $this->post('/api/address', [
             'address' => $this->faker->address,
             'post_code' => $this->faker->postcode,
@@ -43,7 +43,7 @@ class AddressTest extends TestCase
 
     public function test_delete()
     {
-        $address = Address::firstOrFail();
+        $address = Address::factory()->create();
 
         $response = $this->deleteJson('/api/person/' . $address->id);
 
